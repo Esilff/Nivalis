@@ -10,6 +10,7 @@ import java.util.*;
 
 public class AStarFinder implements IPathfinder
 {
+    private ASPoint[][] originalMap;
     private ASPoint[][] map;
     private PathPoint target;
     private List<ASPoint> open;
@@ -18,14 +19,29 @@ public class AStarFinder implements IPathfinder
 
     public AStarFinder(ASPoint[][] map)
     {
-        this.map = map;
+        this.originalMap = map;
     }
 
     @Override
     public Path calculatePath(PathPoint origin, PathPoint target, int maxCost) throws TargetUnreachableException
     {
-        synchronized (this)
+        synchronized (this) // Neccesaire
         {
+            this.map = new ASPoint[originalMap.length][originalMap[0].length];
+
+            for (int i = 0; i < this.map.length; i++)
+            {
+                for (int j = 0; j < this.map[0].length; j++)
+                {
+                    if (this.originalMap[i][j] == null)
+                    {
+                        System.out.println("caca");
+                    }
+
+                    this.map[i][j] = new ASPoint(i, j, this.originalMap[i][j].isWalkable());
+                }
+            }
+
 
             this.target = target;
             this.closed = new boolean[map.length][map[0].length];

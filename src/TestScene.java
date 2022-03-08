@@ -86,6 +86,13 @@ public class TestScene implements Scene {
         }
         texture = new Texture("./res/texture/0.png");
 
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                map[i][j] = new ASPoint(i, j, true);
+            }
+        }
+        pathfinder = new AStarFinder(map);
+
         path = null;
 
     }
@@ -125,12 +132,12 @@ public class TestScene implements Scene {
                 try {
                    if ((xPos != lastX)|| (yPos != lastY)) {
 
-                       for (int i = 0; i < map.length; i++) {
+                       /*for (int i = 0; i < map.length; i++) {
                            for (int j = 0; j < map[i].length; j++) {
                                map[i][j] = new ASPoint(i, j, true);
                            }
                        }
-                       pathfinder = new AStarFinder(map);
+                       pathfinder = new AStarFinder(map);*/
 
                        path = pathfinder.calculatePath(new PathPoint(x, y, true), new PathPoint(x + xPos, y + yPos, true), 20);
                        if (path != null) System.out.println(path.toString());
