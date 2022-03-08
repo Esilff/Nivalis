@@ -179,5 +179,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="joml-1.10.4" level="project" />
   </component>
 </module>
