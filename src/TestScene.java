@@ -44,9 +44,9 @@ public class TestScene implements Scene {
 
     @Override
     public void preprocess() {
-        /*renderbatch = new RenderBatch();
+        renderbatch = new RenderBatch();
         renderbatch.addSprite(new Sprite(0,0,new Texture("./res/texture/0.png")));
-        renderbatch.addSprite(new Sprite(1,0,new Texture("./res/texture/end.png")));*/
+        renderbatch.addSprite(new Sprite(1,0,new Texture("./res/texture/end.png")));
 
         /*float totalWidth = (float) (600  * 2);
         float totalHeight = (float) (300  * 2);
@@ -103,7 +103,7 @@ public class TestScene implements Scene {
             }*/
 
 
-        /*shader.bind();
+        shader.bind();
         shader.setUniform("sampler", 1);
         shader.setUniform("projection", new Transform(x,y,0).getProjection(window.getCamera().getProjection()));
         model.render();
@@ -153,7 +153,7 @@ public class TestScene implements Scene {
             }
 
 
-        }*/
+        }
 
         /*private void testRenderPath () {
             try {
@@ -165,7 +165,8 @@ public class TestScene implements Scene {
                 e.printStackTrace();
             }
         }*/
+        }
 
 
-    }
+
 
