@@ -103,7 +103,7 @@ public class TestScene implements Scene {
             }*/
 
 
-        shader.bind();
+        /*shader.bind();
         shader.setUniform("sampler", 1);
         shader.setUniform("projection", new Transform(x,y,0).getProjection(window.getCamera().getProjection()));
         model.render();
@@ -153,7 +153,7 @@ public class TestScene implements Scene {
             }
 
 
-        }
+        }*/
 
         /*private void testRenderPath () {
             try {
