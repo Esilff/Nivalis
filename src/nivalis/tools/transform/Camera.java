@@ -36,4 +36,14 @@ public class Camera {
     public int getScaleValue() {
         return scaleValue;
     }
+
+    public void zoom() {
+        scaleValue +=1;
+        scale = new Matrix4f().scale(scaleValue);
+    }
+
+    public void dezoom() {
+        scaleValue -=1;
+        scale = new Matrix4f().scale(scaleValue);
+    }
 }

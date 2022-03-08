@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
@@ -119,6 +120,12 @@ public class Shader {
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
         value.get(buffer);
         if (location != -1) glUniformMatrix4fv(location, false, buffer);
+    }
+
+    public void setUniform(String name, int[] array) {
+        int location = glGetUniformLocation(program, name);
+        IntBuffer buffer = BufferUtils.createIntBuffer(array.length);
+        if (location != 1) glUniform1iv(location,array);
     }
 
     /**

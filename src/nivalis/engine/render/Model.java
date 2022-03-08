@@ -1,5 +1,6 @@
 package nivalis.engine.render;
 
+import nivalis.engine.render.utils.Buffers;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -39,15 +40,15 @@ public class Model {
 
         vertexID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vertexID);
-        glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(vertices), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Buffers.createFloatBuffer(vertices), GL_STATIC_DRAW);
 
         textureID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, textureID);
-        glBufferData(GL_ARRAY_BUFFER, createFloatBuffer(textureCoords),GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Buffers.createFloatBuffer(textureCoords),GL_STATIC_DRAW);
 
         indiceID = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, createIntegerBuffer(indices), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, Buffers.createIntegerBuffer(indices), GL_STATIC_DRAW);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -77,31 +78,7 @@ public class Model {
         glDisableVertexAttribArray(1);
     }
 
-    /**
-     * Take an array of float in order to return a float buffer that can be used to initialize a model. In our
-     * case it is used to convert the vertices and texture coordinates array.
-     * @param data A float array.
-     * @return A float buffer.
-     */
 
-    private FloatBuffer createFloatBuffer(float[] data) {
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
-        buffer.put(data);
-        buffer.flip();
-        return buffer;
-    }
 
-    /**
-     * Take an array of integer in order to return a float buffer that can be used to initialize a model. In our
-     * case it is used to convert the indices array.
-     * @param data An integer array.
-     * @return An integer buffer.
-     */
 
-    private IntBuffer createIntegerBuffer(int[] data) {
-        IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
-        buffer.put(data);
-        buffer.flip();
-        return buffer;
-    }
 }

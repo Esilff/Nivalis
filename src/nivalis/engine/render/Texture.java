@@ -61,10 +61,19 @@ public class Texture {
      * @param sampler Store access for the texture inside the shader.
      */
 
-    public void bind(int sampler) {
-        if (sampler >= 0 && sampler <= 31) {
+    public void bind(int sampler) throws InvalidTextureSlotException{
+        if (sampler == 0) throw new InvalidTextureSlotException("The sampler 0 is dedicated for sprites with no texture");
+        if (sampler <= 31) {
             glActiveTexture(GL_TEXTURE0 + sampler);
             glBindTexture(GL_TEXTURE_2D, id);
         }
+        else {
+            throw new InvalidTextureSlotException("The sampler doesn't exist, take an existing texture slot");
+        }
+
+    }
+
+    public void unbind() {
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }
