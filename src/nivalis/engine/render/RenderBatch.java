@@ -11,8 +11,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+
 
 public class RenderBatch {
     private int vertexID;
@@ -45,7 +44,7 @@ public class RenderBatch {
 
     private List<Texture> textures;
 
-    private boolean hasRoom = false;
+    private boolean hasRoom = true;
 
     public RenderBatch() {
         vertices = new float[4 * MAX_BATCH_SIZE * VERTEX_SIZE];
@@ -90,14 +89,14 @@ public class RenderBatch {
         glVertexAttribPointer(0, 3, GL_FLOAT, false, VERTEX_SIZE_BYTES, POS_OFFSET);
         glVertexAttribPointer(1, 4, GL_FLOAT, false, VERTEX_SIZE_BYTES, COLOR_OFFSET);
         glVertexAttribPointer(2, TEX_COORD_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_COORD_OFFSET);
-        glVertexAttribPointer(3,TEX_ID_SIZE, GL_INT, false, VERTEX_SIZE_BYTES, TEX_ID_OFFSET);
+        glVertexAttribPointer(3,TEX_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_ID_OFFSET);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceID);
 
         shader.bind();
         shader.setUniform("projection", camera.getProjection());
-        for (int i = 0; i < textures.size();i++) {
+        for (int i = 1; i < textures.size();i++) {
             try {
-                textures.get(i).bind(i + 1);
+                textures.get(i).bind(i);
             } catch (InvalidTextureSlotException e) {
                 e.printStackTrace();
             }
@@ -112,9 +111,7 @@ public class RenderBatch {
         glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(2);
         glDisableVertexAttribArray(3);
-        for (int i = 0; i < textures.size();i++) {
-            textures.get(i).unbind();
-        }
+
 
     }
 
@@ -123,16 +120,16 @@ public class RenderBatch {
         this.sprites[index] = sprite;
         this.spriteNumber++;
 
-        loadVertexProperties(index);
-        loadIndicesProperties(index);
+
 
         if (sprite.getTexture() != null) {
             if (!textures.contains(sprite.getTexture())) {
                 textures.add(sprite.getTexture());
             }
         }
-        /*loadTexCoordsProperties(index);
-        loadTexIdProperties(index);*/
+
+        loadVertexProperties(index);
+        loadIndicesProperties(index);
 
         if (spriteNumber > MAX_BATCH_SIZE) {
             hasRoom = false;
@@ -149,7 +146,7 @@ public class RenderBatch {
         if (sprite.getTexture() != null) {
             for (int i = 0; i < textures.size(); i++) {
                 if (textures.get(i) == sprite.getTexture()) {
-                    texId = i;
+                    texId = i + 1;
                     break;
                 }
             }
